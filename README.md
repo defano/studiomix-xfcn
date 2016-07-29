@@ -1,7 +1,7 @@
 # StudioMix XFCN
 A HyperCard XFCN (external function) providing advanced audio controls and sound mixing.
 
-__ _Wait... what?!_ __ I developed this in high school as an extension to [HyperCard](http://hypercard.org) (a long-defunct program / application development environment that shipped with every Macintosh sold in the late eighties and nineties). I have archived its source code and documentation here for posterity. And nostalgia.
+**_Wait... what?!_** I developed this in high school as an extension to [HyperCard](http://hypercard.org) (a long-defunct program / application development environment that shipped with every Macintosh sold in the late eighties and nineties). I have archived its source code and documentation here for posterity. And nostalgia.
 
 ![Screenshot](/images/screenshot.png)
 
@@ -60,6 +60,8 @@ StudioMix will return ”empty” when it has successfully executed, otherwise w
 
 `COMMAND` Specifies a StudioMix subcommand. The command is case-insensitive and may contain a variable in its place. `COMMAND` should contain one of the following subcommands:
 
+----
+
 #### PLAY
 
 Begins sound play in a given channel. `PLAY` requires parameters 1 - 3. Syntax for the play subcommand is:
@@ -89,6 +91,8 @@ Starting sound play from StudioMix’s second sound channel ignoring optional pa
 Get StudioMix(“PLAY”,”Chan2”,”MySndRes”)
 ```
 
+----
+
 #### STOP 	
 
 Stops the current sound being played on a given sound channel. The `STOP` subcommand syntax is as follows:
@@ -109,6 +113,8 @@ Stopping the sound playing on `Chan2`.
 Get StudioMix(“STOP”,”Chan2”)
 ```
 
+----
+
 #### PAUSE
 
 Pauses the sound playing in a given channel. Syntax for the `PAUSE` subcommand is as follows:
@@ -128,6 +134,8 @@ Pausing the sound playing on Chan1.
 ```
 Get StudioMix(“PAUSE”,”Chan1”)
 ```
+
+----
 
 #### RESUME
 
@@ -157,6 +165,8 @@ Resuming play on the previously paused `Chan1`.
 Get StudioMix(“RESUME”,”Chan1”)
 ```
 
+----
+
 #### SETRATE
 
 Set the rate of play (pitch) of the currently playing sound in a specified sound channel, hence altering the sounds pitch, octave, and duration. The `SETRATE` syntax is as follows:
@@ -182,6 +192,8 @@ Setting the rate of the sound playing on channel 2 (`Chan2`) to a pitch slightly
 Get StudioMix(“SETRATE”,”Chan2”,7)
 ```
 
+----
+
 #### SETVOL
 
 Sets the output volume of the currently playing sound on a specified channel. The `SETRATE` syntax is as follows:
@@ -202,6 +214,8 @@ Setting the volume of the sound playing on channel 1 (`Chan1`) to its loudest vo
 ```
 Get StudioMix(“SETVOL”,”Chan1”,255)
 ```
+
+----
 
 #### BEAT
 
@@ -237,6 +251,8 @@ Stopping the current beat.
 Get StudioMix(“BEAT”,”Stop”)
 ```
 
+----
+
 #### VARIATE
 
 Inserts a “variation” in the currently playing beat. When `VARIATE` is called the beat loop is interrupted and the passed sound resource is played. When the variation resource is finished the beat continues playing.
@@ -256,6 +272,8 @@ Adding a variation in the currently playing beat.
 ```
 Get StudioMix(“VARIATE”,”MyVariationResource”)
 ```
+
+----
 
 #### ISDONE 	
 
@@ -277,6 +295,8 @@ Determine if the sound playing on channel 1 has finished
 Get StudioMix(“ISDONE”,”Chan1”)
 ```
 
+----
+
 #### MASTERVOL
 
 Allows control of the Macintosh’s master volume. Changing the value of `MASTERVOL` changes the volume of all StudioMix channels, the alert sound and any other sounds currently playing. This has the same effect as changing the volume in the “Sound” control panel.
@@ -297,6 +317,8 @@ Changing the volume of all sound channels on the Macintosh to a loud setting:
 Get StudioMix(“MASTERVOL”,”7”)
 ```
 
+----
+
 #### GETMASTERVOL
 
 Returns the value set by `SETMASTERVOL`, the Macintosh master volume. The syntax for determining `GETMASTERVOL` is as follows:
@@ -312,6 +334,8 @@ Putting the master volume level into a container called `gMasterVol`
 ```
 put StudioMix(GETMASTERVOL) into gMasterVol
 ```
+
+----
 
 #### CUE
 
@@ -344,6 +368,8 @@ On PlayStudioMixCue
 End PlayStudioMixCue
 ```
 
+----
+
 #### UNLOAD 	
 
 Unloads the memory obtained by a StudioMix `PLAY` or `CUE` command. When no sound has been cued in a channel and a `PLAY` command is executed, StudioMix allocates a bock of memory to hold the given sound resource. The next time StudioMix is called with `PLAY`, `STOP`, or `CUE` the old block of memory is purged. To purge a block of memory without calling `PLAY` or `STOP` use `UNLOAD`. The `UNLOAD` syntax is as follows:
@@ -364,6 +390,8 @@ Unloading the sound resource that is no longer in use on channel 1
 Get StudioMix(“UNLOAD”,”Chan1”)
 ```
 
+----
+
 #### FLUSH
 
 Flushes all memory from StudioMix sound channels. The `FLUSH` subcommand begins by quieting all StudioMix sounds currently playing, 			removes all used resources, and deletes the used sound channels.
@@ -379,6 +407,8 @@ __EXAMPLE:__
 ```
 Get StudioMix(“Flush”)
 ```
+
+----
 
 #### GESTALTSTUDIO
 
@@ -398,6 +428,8 @@ __EXAMPLE:__
 Get StudioMix(“GestaltStudio”)
 ```
 
+----
+
 #### OFFSET
 
 Returns the number of bytes that a given sound resource’s data is offset from its resource header. Offset returns the same value as the toolbox trap `GetSndHeaderOffset`.  Syntax is as follows:
@@ -413,6 +445,8 @@ __EXAMPLE:__
 ```
 Get StudioMix(“Offset”,CoolSound)
 ```
+
+----
 
 #### ENABLEBEEP & DISABLEBEEP
 
@@ -432,6 +466,8 @@ __EXAMPLE:__
 ```
 Get StudioMix(“DisableBeep”)
 ```
+
+----
 
 ### CPUData
 
@@ -458,6 +494,8 @@ On DoTellCPU
 End DoTellCPU
 ```
 
+----
+
 #### DISKPLAY
 
 Determines whether built in play-from-disk routines should be used in StudioMix. Play from disk allows StudioMix to play large sounds with fairly little memory. However, as a tradeoff to memory, `DISKPLAY` may cause HyperCard to run slower than usual.
@@ -475,6 +513,8 @@ __EXAMPLE:__
 ```
 Get StudioMix(“DiskPlay”,True)
 ```
+
+----
 
 #### GETDISKPLAY
 
