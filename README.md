@@ -23,7 +23,7 @@ Error Code | Description
 -----------|------------
 `(-700) "Bad Parameter List."` | StudioMix was passed the wrong number of parameters for the given subcommand
 `(-701) "Not Enough Memory."` | Not enough application memory is available to carry out the function of the specified subcommand. Increasing the amount of memory given to 			HyperCard may help.
-`(-702) "Invalid or Bad Sound “snd” Resource."` | The sound resource you wish to play does not exist in any currently open 			resource forks. If the sound exists in another stack use HyperCard's “Start using” command.
+`(-702) "Invalid or Bad Sound "snd" Resource."` | The sound resource you wish to play does not exist in any currently open 			resource forks. If the sound exists in another stack use HyperCard's "Start using" command.
 `(-703) "Bad Parameter in Command."` | A parameter passed to a subcommand is invalid.
 `(-704) "Digital Sound Studio General Failure."` | Multiple errors occurred when executing the subcommand. This error is 			generally proceeded by other internal errors such as `(-701)`. Sending `FLUSH` may help.
 `(-705) "Error Sending Sound Manager Command."` | The sound manager returned an error when it was passed a command, 			this is an internal system software problem. Try using `FLUSH`.
@@ -48,7 +48,7 @@ DSSInternalData : LongInt;
 DSSInternalData := LONGINT(POINTER(SndChannelPtr));
 ```
 
-#### Warning
+__WARNING:__
 
 Changing any of the internal data variables will render StudioMix inoperable until a `FLUSH` subcommand is issued. Memory allocated by the old sound channels will be 	lost.
 
@@ -56,13 +56,13 @@ Changing any of the internal data variables will render StudioMix inoperable unt
 
 `StudioMix(COMMAND,[Param1],[Param2],[Param3],[Param4])`
 
-StudioMix will return ”empty” when it has successfully executed, otherwise when 	sound processing fails an error code will be passed to HypeCard  as its result.
+StudioMix will return "empty" when it has successfully executed, otherwise when 	sound processing fails an error code will be passed to HypeCard  as its result.
 
 `COMMAND` Specifies a StudioMix subcommand. The command is case-insensitive and may contain a variable in its place. `COMMAND` should contain one of the following subcommands:
 
 ----
 
-#### PLAY
+### PLAY
 
 Begins sound play in a given channel. `PLAY` requires parameters 1 - 3. Syntax for the play subcommand is:
 
@@ -82,23 +82,23 @@ __EXAMPLE:__
 Starting sound play from StudioMix’s second sound channel with an initial volume of 200 at a default rate of 22khz:
 
 ```
-Get StudioMix(“PLAY”,”Chan2”,”MySndRes”,200,5)
+Get StudioMix("PLAY","Chan2","MySndRes",200,5)
 ```
 
 Starting sound play from StudioMix’s second sound channel ignoring optional parameters.
 
 ```
-Get StudioMix(“PLAY”,”Chan2”,”MySndRes”)
+Get StudioMix("PLAY","Chan2","MySndRes")
 ```
 
 ----
 
-#### STOP 	
+### STOP 	
 
 Stops the current sound being played on a given sound channel. The `STOP` subcommand syntax is as follows:
 
 ```
-StudioMix(“STOP”,ChanID)
+StudioMix("STOP",ChanID)
 ```
 
 Parameter | Description
@@ -110,12 +110,12 @@ __EXAMPLE:__
 Stopping the sound playing on `Chan2`.
 
 ```
-Get StudioMix(“STOP”,”Chan2”)
+Get StudioMix("STOP","Chan2")
 ```
 
 ----
 
-#### PAUSE
+### PAUSE
 
 Pauses the sound playing in a given channel. Syntax for the `PAUSE` subcommand is as follows:
 
@@ -132,12 +132,12 @@ __EXAMPLE:__
 Pausing the sound playing on Chan1.
 
 ```
-Get StudioMix(“PAUSE”,”Chan1”)
+Get StudioMix("PAUSE","Chan1")
 ```
 
 ----
 
-#### RESUME
+### RESUME
 
 Resumes a sound that has been paused, or rate modified in a given channel. `RESUME` resets the rate of the currently playing sound to that specified in its sound header. Syntax for the `RESUME` subcommand is as follows:
 
@@ -155,19 +155,19 @@ The `RESUME` subcommand is also available as `UNPAUSE`.
 
 __SPECIAL CONSIDERATIONS:__
 
-`RESUME` will continue sound play at the sounds default rate. Therefore, a sound that is paused and then “resumed”, will not necessarily play at the rate it was playing before a pause command, if the `RATE` command was sent to StudioMix prior to `PAUSE`. In order to counteract this problem, store the sound's rate in a variable (`theOldRate`), pause the sound, and instead of sending `Get 			studioMix(RESUME,Chan1)` use `Get studioMix(SETRATE,Chan1,theOldRate)`.
+`RESUME` will continue sound play at the sounds default rate. Therefore, a sound that is paused and then "resumed", will not necessarily play at the rate it was playing before a pause command, if the `RATE` command was sent to StudioMix prior to `PAUSE`. In order to counteract this problem, store the sound's rate in a variable (`theOldRate`), pause the sound, and instead of sending `Get 			studioMix(RESUME,Chan1)` use `Get studioMix(SETRATE,Chan1,theOldRate)`.
 
 __EXAMPLE:__
 
 Resuming play on the previously paused `Chan1`.
 
 ```
-Get StudioMix(“RESUME”,”Chan1”)
+Get StudioMix("RESUME","Chan1")
 ```
 
 ----
 
-#### SETRATE
+### SETRATE
 
 Set the rate of play (pitch) of the currently playing sound in a specified sound channel, hence altering the sounds pitch, octave, and duration. The `SETRATE` syntax is as follows:
 
@@ -182,19 +182,19 @@ Parameter | Description
 
 __NOTE:__
 
-Calling the `SETRATE` command on a channel that is paused will cause the channel to resume play at the new rate. See the `RESUME` command for more information about “unpausing” channels using `SETRATE`.
+Calling the `SETRATE` command on a channel that is paused will cause the channel to resume play at the new rate. See the `RESUME` command for more information about "unpausing" channels using `SETRATE`.
 
 __EXAMPLE:__
 
 Setting the rate of the sound playing on channel 2 (`Chan2`) to a pitch slightly higher than its recorded speed of 22khz.
 
 ```
-Get StudioMix(“SETRATE”,”Chan2”,7)
+Get StudioMix("SETRATE","Chan2",7)
 ```
 
 ----
 
-#### SETVOL
+### SETVOL
 
 Sets the output volume of the currently playing sound on a specified channel. The `SETRATE` syntax is as follows:
 
@@ -212,12 +212,12 @@ __EXAMPLE:__
 Setting the volume of the sound playing on channel 1 (`Chan1`) to its loudest volume.
 
 ```
-Get StudioMix(“SETVOL”,”Chan1”,255)
+Get StudioMix("SETVOL","Chan1",255)
 ```
 
 ----
 
-#### BEAT
+### BEAT
 
 Installs a sound resource as a background loop. The sound specified in `BeatParam` is looped indefinitely without a gap between sounds. The syntax for `BEAT` is as follows:
 
@@ -233,29 +233,29 @@ If the beat command is not passed one of above string constants it assumes that 
 
 __EXAMPLE:__
 
-Starting a sound named “MyBeat” in an indefinite loop.
+Starting a sound named "MyBeat" in an indefinite loop.
 
 ```
-Get StudioMix(“BEAT”,”MyBeat”)
+Get StudioMix("BEAT","MyBeat")
 ```
 
 Deviating the current beat.
 
 ```
-Get StudioMix(“BEAT”,”Deviate”)
+Get StudioMix("BEAT","Deviate")
 ```
 
 Stopping the current beat.
 
 ```
-Get StudioMix(“BEAT”,”Stop”)
+Get StudioMix("BEAT","Stop")
 ```
 
 ----
 
-#### VARIATE
+### VARIATE
 
-Inserts a “variation” in the currently playing beat. When `VARIATE` is called the beat loop is interrupted and the passed sound resource is played. When the variation resource is finished the beat continues playing.
+Inserts a "variation" in the currently playing beat. When `VARIATE` is called the beat loop is interrupted and the passed sound resource is played. When the variation resource is finished the beat continues playing.
 
 ```
 StudioMix(VARIATE,SndRes)
@@ -270,12 +270,12 @@ __EXAMPLE:__
 Adding a variation in the currently playing beat.
 
 ```
-Get StudioMix(“VARIATE”,”MyVariationResource”)
+Get StudioMix("VARIATE","MyVariationResource")
 ```
 
 ----
 
-#### ISDONE 	
+### ISDONE 	
 
 Returns a boolean (logical) expression for the status of a given sound channel. The `ISDONE` subcommand returns TRUE if the if the sound channel has finished processing commands and `FALSE` if it hasn’t. `ISDONE` syntax is as follows
 
@@ -285,21 +285,21 @@ StudioMix(ISDONE,Chan)
 
 Parameter | Description
 ----------|------------
-`Chan` | Contains a channel identifier equal to `Chan1`, `Chan2` or `Beat`”
+`Chan` | Contains a channel identifier equal to `Chan1`, `Chan2` or `Beat`"
 
 __EXAMPLE:__
 
 Determine if the sound playing on channel 1 has finished
 
 ```
-Get StudioMix(“ISDONE”,”Chan1”)
+Get StudioMix("ISDONE","Chan1")
 ```
 
 ----
 
-#### MASTERVOL
+### MASTERVOL
 
-Allows control of the Macintosh’s master volume. Changing the value of `MASTERVOL` changes the volume of all StudioMix channels, the alert sound and any other sounds currently playing. This has the same effect as changing the volume in the “Sound” control panel.
+Allows control of the Macintosh’s master volume. Changing the value of `MASTERVOL` changes the volume of all StudioMix channels, the alert sound and any other sounds currently playing. This has the same effect as changing the volume in the "Sound" control panel.
 
 ```
 StudioMix(MASTERVOL,VolLevel)
@@ -314,12 +314,12 @@ __EXAMPLE:__
 Changing the volume of all sound channels on the Macintosh to a loud setting:
 
 ```
-Get StudioMix(“MASTERVOL”,”7”)
+Get StudioMix("MASTERVOL","7")
 ```
 
 ----
 
-#### GETMASTERVOL
+### GETMASTERVOL
 
 Returns the value set by `SETMASTERVOL`, the Macintosh master volume. The syntax for determining `GETMASTERVOL` is as follows:
 
@@ -337,7 +337,7 @@ put StudioMix(GETMASTERVOL) into gMasterVol
 
 ----
 
-#### CUE
+### CUE
 
 Loads a specified sound in a given sound channel so that there is no loading delay when the sound is played. Use `CUE` when sound play timing is imperative.
 
@@ -357,20 +357,20 @@ Using the `CUE` command to preload a resource for quick timing control.
 ```
 On PlayStudioMixCue
 
-    If StudioMix(QUE,”Chan1”,”MySound”) is not empty then
+    If StudioMix(QUE,"Chan1","MySound") is not empty then
 		    DoLoadError
 	  end if
 
 			-- Do your other routine
 
-		Get StudioMix(PLAY,”Chan1”,”QUE”,”200,”5”)
+		Get StudioMix(PLAY,"Chan1","QUE","200,"5")
 
 End PlayStudioMixCue
 ```
 
 ----
 
-#### UNLOAD 	
+### UNLOAD 	
 
 Unloads the memory obtained by a StudioMix `PLAY` or `CUE` command. When no sound has been cued in a channel and a `PLAY` command is executed, StudioMix allocates a bock of memory to hold the given sound resource. The next time StudioMix is called with `PLAY`, `STOP`, or `CUE` the old block of memory is purged. To purge a block of memory without calling `PLAY` or `STOP` use `UNLOAD`. The `UNLOAD` syntax is as follows:
 
@@ -387,30 +387,30 @@ __EXAMPLE:__
 Unloading the sound resource that is no longer in use on channel 1
 
 ```
-Get StudioMix(“UNLOAD”,”Chan1”)
+Get StudioMix("UNLOAD","Chan1")
 ```
 
 ----
 
-#### FLUSH
+### FLUSH
 
 Flushes all memory from StudioMix sound channels. The `FLUSH` subcommand begins by quieting all StudioMix sounds currently playing, 			removes all used resources, and deletes the used sound channels.
 
 The `FLUSH` subcommand is useful in fixing internal errors returned by StudioMix. Often after HyperCard receives an `errorCode` from StudioMix the XFCN will continue to fail in processing commands generally due to an internal memory error. This may be fixed without restarting HyperCard by sending a `FLUSH` command. The `FLUSH` subcommand uses no other parameters. Its syntax is as follows:
 
 ```
-StudioMix(“Flush”)
+StudioMix("Flush")
 ```
 
 __EXAMPLE:__
 
 ```
-Get StudioMix(“Flush”)
+Get StudioMix("Flush")
 ```
 
 ----
 
-#### GESTALTSTUDIO
+### GESTALTSTUDIO
 
 Determines if the current operating environment has the necessary hardware and software to run the StudioMix XFCN. If the current 			operating environment is suitable for StudioMix then `GESTALTSTUDIO` returns `true`, otherwise it returns `false`
 
@@ -419,23 +419,23 @@ StudioMix calls this routine each time a sound based subcommand is passed to it.
 `GESTALTSTUDIO` can be used as a preliminary measure to alert the user of hardware incompatibilities. Syntax is as follows:
 
 ```
-StudioMix(“GestaltStudio”)
+StudioMix("GestaltStudio")
 ```
 
 __EXAMPLE:__
 
 ```
-Get StudioMix(“GestaltStudio”)
+Get StudioMix("GestaltStudio")
 ```
 
 ----
 
-#### OFFSET
+### OFFSET
 
 Returns the number of bytes that a given sound resource’s data is offset from its resource header. Offset returns the same value as the toolbox trap `GetSndHeaderOffset`.  Syntax is as follows:
 
 ```
-StudioMix(“Offset”,MySndResourceName)
+StudioMix("Offset",MySndResourceName)
 ```
 
 `MySndResourceName` is a valid sound resource identifier.
@@ -443,18 +443,18 @@ StudioMix(“Offset”,MySndResourceName)
 __EXAMPLE:__
 
 ```
-Get StudioMix(“Offset”,CoolSound)
+Get StudioMix("Offset",CoolSound)
 ```
 
 ----
 
-#### ENABLEBEEP & DISABLEBEEP
+### ENABLEBEEP & DISABLEBEEP
 
 Respectively enables or disables the system beep alert sound on the Macintosh. A system beep that has been disabled will remain disabled until an `ENABLEBEEP` call is made or the Macintosh is restarted. Syntax is as follows:
 
 ```
-StudioMix(“EnableBeep”)
-StudioMix(“DisableBeep”)
+StudioMix("EnableBeep")
+StudioMix("DisableBeep")
 ```
 
 __NOTE:__
@@ -464,7 +464,7 @@ When the system alert has been disabled no sound will be heard nor will the menu
 __EXAMPLE:__
 
 ```
-Get StudioMix(“DisableBeep”)
+Get StudioMix("DisableBeep")
 ```
 
 ----
@@ -476,7 +476,7 @@ Returns information from the sound manager regarding sound process time given to
 CPU Data returns 3 items separated by commas. Item 1 is the percentage of time currently be used by the CPU for sound manager processing. Item 2 is the maximum percentage that item may reach. If this is less that 100% it signifies that the CPU is also 			busy processing other (often time-based) data such as QuickTime. Item 3 returns the number of sound channels allocated. StudioMix always has three channels available, other applications may also have an allocated channel. Syntax is as follows:
 
 ```
-StudioMix(“CPUData”)
+StudioMix("CPUData")
 ```
 
 __EXAMPLE:__
@@ -489,19 +489,19 @@ On DoTellCPU
     Put item 2 of StudioMix(CPUData) into MaxTime
     Put item 3 of StudioMix(CPUData) into NumChannels
 
-    Answer “CPU DATA:” & Return & “Processing time: “ & CurTime & Return & “Max CPU Time: “ && MaxTime & Return & “Allocated Channels: “ && NumChannels
+    Answer "CPU DATA:" & Return & "Processing time: " & CurTime & Return & "Max CPU Time: " && MaxTime & Return & "Allocated Channels: " && NumChannels
 
 End DoTellCPU
 ```
 
 ----
 
-#### DISKPLAY
+### DISKPLAY
 
 Determines whether built in play-from-disk routines should be used in StudioMix. Play from disk allows StudioMix to play large sounds with fairly little memory. However, as a tradeoff to memory, `DISKPLAY` may cause HyperCard to run slower than usual.
 
 ```
-StudioMix(“DISKPLAY”,DiskBoolean)
+StudioMix("DISKPLAY",DiskBoolean)
 ```
 
 Parameter | Description
@@ -511,21 +511,21 @@ DiskBoolean | Contains either `TRUE` or `FALSE`. True indicating that play from 
 __EXAMPLE:__
 
 ```
-Get StudioMix(“DiskPlay”,True)
+Get StudioMix("DiskPlay",True)
 ```
 
 ----
 
-#### GETDISKPLAY
+### GETDISKPLAY
 
 Returns the value set by `DISKPLAY` indicating whether StudioMix is executing play from disk routines.
 
 ```
-StudioMix(“GETDISKPLAY”)
+StudioMix("GETDISKPLAY")
 ```
 
 __EXAMPLE:__
 
 ```
-Get StudioMix(“DiskPlay”)
+Get StudioMix("DiskPlay")
 ```
